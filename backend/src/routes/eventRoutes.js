@@ -7,6 +7,7 @@ const {
   getMyEvents,
   deleteEvent,
   updateEvent,
+  getEventById,
 } = require("../controllers/eventController");
 const { protect } = require("../middlewares/authMiddleware");
 
@@ -47,5 +48,7 @@ router.delete("/:id", protect, deleteEvent);
 
 // Update event (Only the creator can edit their event)
 router.put("/:id", protect, upload.single("image"), updateEvent);
+
+router.get("/:id", protect, getEventById); // Fetch an event by ID
 
 module.exports = router;

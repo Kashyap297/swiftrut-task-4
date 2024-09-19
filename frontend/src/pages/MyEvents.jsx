@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/api"; // Assuming your Axios instance is in utils/api.js
 
 // Base URL for the backend (adjust if necessary)
@@ -8,11 +9,12 @@ const MyEvents = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
+  // Fetch the user's events
   useEffect(() => {
     const fetchMyEvents = async () => {
       try {
-        // Use the Axios instance `api`
         const response = await api.get("/events/my-events");
         setEvents(response.data);
         setLoading(false);
@@ -22,9 +24,27 @@ const MyEvents = () => {
         setLoading(false);
       }
     };
-
     fetchMyEvents();
   }, []);
+
+  // Handle delete event
+  const handleDelete = async (eventId) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this event?")) {
+        await api.delete(`/events/${eventId}`);
+        setEvents(events.filter((event) => event._id !== eventId)); // Remove the deleted event from the list
+        alert("Event deleted successfully");
+      }
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+      alert("Failed to delete event");
+    }
+  };
+
+  // Navigate to the edit event page
+  const handleEdit = (eventId) => {
+    navigate(`/edit-event/${eventId}`); // Assume you have an edit page for events
+  };
 
   if (loading) {
     return <p>Loading events...</p>;
@@ -67,6 +87,22 @@ const MyEvents = () => {
 
               {/* Event Location */}
               <p className="text-gray-600">Location: {event.location}</p>
+
+              {/* Edit and Delete Buttons */}
+              <div className="flex justify-between mt-4">
+                <button
+                  onClick={() => handleEdit(event._id)}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(event._id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
+                >
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>
