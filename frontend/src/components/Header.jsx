@@ -11,12 +11,12 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext); // Get user from AuthContext
   const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // Redirect to login after logging out
+    navigate("/"); // Redirect to homepage after logging out
   };
 
   return (
@@ -36,24 +36,29 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search events..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+            className="px-4 py-2 ps-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
           <FontAwesomeIcon
             icon={faSearch}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
           />
         </div>
 
         {/* Buttons */}
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 items-center">
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
-            >
-              <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
-              Logout
-            </button>
+            <>
+              <span className="text-gray-700 font-semibold">
+                Welcome, {user.username}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
+              >
+                <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
+                Logout
+              </button>
+            </>
           ) : (
             <>
               <Link
