@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+const path = require("path");
 const {
   createEvent,
   getAllEvents,
@@ -8,8 +10,27 @@ const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
-// Create a new event (only authenticated users)
-router.post("/create", protect, createEvent);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Store files in "uploads/" folder
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image files are allowed!"), false);
+    }
+  },
+});
+
+router.post("/create", protect, upload.single("image"), createEvent); // Upload single image file
 
 // Get all events (publicly accessible)
 router.get("/all", getAllEvents);
