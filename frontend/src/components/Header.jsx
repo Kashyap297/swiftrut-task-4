@@ -16,7 +16,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login"); // Redirect to login after logging out
+    navigate("/"); // Redirect to login after logging out
   };
 
   return (
