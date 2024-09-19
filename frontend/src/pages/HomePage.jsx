@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import EventCard from "../components/EventCard";
-import api from "../api/api"; // Assuming you have axios instance in api.js
+import api from "../api/api"; // Axios instance
 
 const HomePage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   // Fetch all events from the API
   useEffect(() => {
     const fetchEvents = async () => {
@@ -37,6 +37,7 @@ const HomePage = () => {
               title={event.title}
               date={event.date}
               location={event.location}
+              imageUrl={event.imageUrl} // Pass the image URL to EventCard
             />
           ))
         ) : (
