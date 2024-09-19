@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
+  const { register } = useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    navigate("/");
+    try {
+      await register(username, email, password);
+      navigate("/");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Register</h1>
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
