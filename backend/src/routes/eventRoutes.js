@@ -5,14 +5,17 @@ const {
   createEvent,
   getAllEvents,
   getMyEvents,
+  deleteEvent,
+  updateEvent,
 } = require("../controllers/eventController");
 const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
+// Setup Multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../uploads/")); // Updated to point to src/uploads
+    cb(null, path.join(__dirname, "../uploads/"));
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -30,12 +33,19 @@ const upload = multer({
   },
 });
 
-router.post("/create", protect, upload.single("image"), createEvent); // Upload single image file
+// Create a new event
+router.post("/create", protect, upload.single("image"), createEvent);
 
 // Get all events (publicly accessible)
 router.get("/all", getAllEvents);
 
 // Get events created by the logged-in user
 router.get("/my-events", protect, getMyEvents);
+
+// Delete event (Only the creator can delete their event)
+router.delete("/:id", protect, deleteEvent);
+
+// Update event (Only the creator can edit their event)
+router.put("/:id", protect, upload.single("image"), updateEvent);
 
 module.exports = router;

@@ -66,7 +66,81 @@ const getMyEvents = async (req, res) => {
   }
 };
 
+// Delete an event
+// Delete an event
+const deleteEvent = async (req, res) => {
+  try {
+    // Find the event by ID
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the logged-in user is the event creator
+    if (event.createdBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to delete this event" });
+    }
+
+    // Delete the event
+    await event.deleteOne(); // Using deleteOne() instead of remove()
+
+    res.status(200).json({ message: "Event deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error while deleting the event",
+      error: error.message,
+    });
+  }
+};
+
+// Update/Edit an event
+const updateEvent = async (req, res) => {
+  const { title, description, date, location, maxAttendees } = req.body;
+
+  try {
+    // Find the event by ID
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the logged-in user is the event creator
+    if (event.createdBy.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: "You are not authorized to edit this event" });
+    }
+
+    // Update event fields
+    event.title = title || event.title;
+    event.description = description || event.description;
+    event.date = date || event.date;
+    event.location = location || event.location;
+    event.maxAttendees = maxAttendees || event.maxAttendees;
+
+    // Check if image is uploaded
+    if (req.file) {
+      event.imageUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const updatedEvent = await event.save();
+
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error while updating the event",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
+  deleteEvent,
+  updateEvent,
   createEvent,
   getAllEvents,
   getMyEvents,
