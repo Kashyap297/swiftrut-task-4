@@ -1,9 +1,10 @@
-// src/App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import CreateEvent from "./pages/CreateEvent";
+import MyEvents from "./pages/MyEvents";
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -42,6 +43,23 @@ function App() {
             element={
               <ProtectedRoute>
                 <h1>Protected Content: Only visible to logged-in users!</h1>
+              </ProtectedRoute>
+            }
+          />
+          {/* Routes for Create Event and My Events */}
+          <Route
+            path="/create-event"
+            element={
+              <ProtectedRoute>
+                <CreateEvent />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-events"
+            element={
+              <ProtectedRoute>
+                <MyEvents />
               </ProtectedRoute>
             }
           />
