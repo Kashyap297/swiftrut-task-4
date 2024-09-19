@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 const Register = () => {
@@ -98,9 +98,12 @@ const Register = () => {
         {/* Sign In Link */}
         <div className="text-center mt-6">
           <span className="text-gray-500">Already have an account?</span>{" "}
-          <a href="#" className="text-orange-500 font-semibold hover:underline">
+          <Link
+            to="/login"
+            className="text-orange-500 font-semibold hover:underline"
+          >
             Log in
-          </a>
+          </Link>
         </div>
       </div>
     </div>

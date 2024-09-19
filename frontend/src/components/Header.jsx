@@ -1,5 +1,4 @@
-// src/components/Header.jsx
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,16 +6,25 @@ import {
   faUserCircle,
   faSignInAlt,
   faSignOutAlt,
+  faCaretDown,
+  faPlus,
+  faListAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../context/AuthContext";
 
 const Header = () => {
   const { user, logout } = useContext(AuthContext); // Get user from AuthContext
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Dropdown state
 
   const handleLogout = () => {
     logout();
     navigate("/"); // Redirect to homepage after logging out
+  };
+
+  // Toggle dropdown
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
   };
 
   return (
@@ -45,12 +53,47 @@ const Header = () => {
         </div>
 
         {/* Buttons */}
-        <div className="flex space-x-4 items-center">
+        <div className="flex space-x-4 items-center relative">
           {user ? (
             <>
               <span className="text-gray-700 font-semibold">
                 Welcome, {user.username}
               </span>
+
+              {/* Dropdown Toggle Button */}
+              <div className="relative">
+                <button
+                  onClick={toggleDropdown}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-600 flex items-center"
+                >
+                  Actions
+                  <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
+                </button>
+
+                {/* Dropdown Menu */}
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                    <Link
+                      to="/create-event"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <FontAwesomeIcon icon={faPlus} className="mr-2" />
+                      Create Event
+                    </Link>
+                    <Link
+                      to="/my-events"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <FontAwesomeIcon icon={faListAlt} className="mr-2" />
+                      My Events
+                    </Link>
+                  </div>
+                )}
+              </div>
+
+              {/* Logout Button */}
               <button
                 onClick={handleLogout}
                 className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
