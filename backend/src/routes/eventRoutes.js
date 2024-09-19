@@ -8,6 +8,7 @@ const {
   deleteEvent,
   updateEvent,
   getEventById,
+  rsvpEvent,
 } = require("../controllers/eventController");
 const { protect } = require("../middlewares/authMiddleware");
 
@@ -50,5 +51,7 @@ router.delete("/:id", protect, deleteEvent);
 router.put("/:id", protect, upload.single("image"), updateEvent);
 
 router.get("/:id", protect, getEventById); // Fetch an event by ID
+
+router.post("/:id/rsvp", protect, rsvpEvent);
 
 module.exports = router;

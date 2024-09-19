@@ -149,7 +149,45 @@ const getEventById = async (req, res) => {
 
     res.status(200).json(event);
   } catch (error) {
-    res.status(500).json({ message: "Server error while fetching the event", error: error.message });
+    res.status(500).json({
+      message: "Server error while fetching the event",
+      error: error.message,
+    });
+  }
+};
+
+// RSVP to an event
+const rsvpEvent = async (req, res) => {
+  try {
+    // Find the event by ID
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    // Check if the user has already RSVP'd
+    if (event.attendees.includes(req.user._id)) {
+      return res
+        .status(400)
+        .json({ message: "You have already RSVP'd to this event" });
+    }
+
+    // Check if the event has reached its maximum attendees
+    if (event.attendees.length >= event.maxAttendees) {
+      return res.status(400).json({ message: "Event is fully booked" });
+    }
+
+    // Add the user to the attendees list
+    event.attendees.push(req.user._id);
+    await event.save();
+
+    res.status(200).json({ message: "RSVP successful", event });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error while RSVPing to the event",
+      error: error.message,
+    });
   }
 };
 
@@ -159,5 +197,6 @@ module.exports = {
   createEvent,
   getAllEvents,
   getMyEvents,
-  getEventById
+  getEventById,
+  rsvpEvent,
 };
