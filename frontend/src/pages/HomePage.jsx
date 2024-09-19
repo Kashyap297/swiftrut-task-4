@@ -5,7 +5,7 @@ import api from "../api/api"; // Axios instance
 const HomePage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Fetch all events from the API
   useEffect(() => {
     const fetchEvents = async () => {
@@ -33,7 +33,8 @@ const HomePage = () => {
         {events.length > 0 ? (
           events.map((event) => (
             <EventCard
-              key={event._id}
+              key={event._id} // Use event._id as the unique key
+              id={event._id} // Pass the _id to EventCard as 'id'
               title={event.title}
               date={event.date}
               location={event.location}

@@ -50,8 +50,10 @@ router.delete("/:id", protect, deleteEvent);
 // Update event (Only the creator can edit their event)
 router.put("/:id", protect, upload.single("image"), updateEvent);
 
-router.get("/:id", protect, getEventById); // Fetch an event by ID
+// Public route: Fetch an event by ID (without protect)
+router.get("/:id", getEventById); // Fetch an event by ID, no protection
 
+// RSVP to an event
 router.post("/:id/rsvp", protect, rsvpEvent);
 
 module.exports = router;

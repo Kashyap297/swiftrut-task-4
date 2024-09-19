@@ -4,7 +4,8 @@ import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import CreateEvent from "./pages/CreateEvent";
-import EditEvent from "./pages/EditEvent"; // Import the EditEvent component
+import EditEvent from "./pages/EditEvent";
+import EventDetails from "./pages/EventDetails"; // Import the EventDetails component
 import MyEvents from "./pages/MyEvents";
 import Header from "./components/Header";
 import { AuthProvider } from "./context/AuthContext";
@@ -47,7 +48,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* Routes for Create Event and My Events */}
+
+          {/* Routes for creating and viewing user's events */}
           <Route
             path="/create-event"
             element={
@@ -74,6 +76,9 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          {/* New Route for viewing event details */}
+          <Route path="/event/:id" element={<EventDetails />} />
         </Routes>
       </div>
     </AuthProvider>
