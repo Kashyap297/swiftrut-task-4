@@ -15,17 +15,10 @@ function App() {
       <div className="min-h-screen flex flex-col">
         <Header />
         <Routes>
-          {/* Protected Routes */}
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          />
+          {/* Public Route: HomePage is accessible to everyone */}
+          <Route path="/" element={<HomePage />} />
 
-          {/* Public Routes (Login/Register) */}
+          {/* Public Routes (Login/Register) - Only visible to non-logged-in users */}
           <Route
             path="/login"
             element={
@@ -40,6 +33,16 @@ function App() {
               <PublicRoute>
                 <Register />
               </PublicRoute>
+            }
+          />
+
+          {/* Protected Routes: Only accessible to logged-in users */}
+          <Route
+            path="/protected"
+            element={
+              <ProtectedRoute>
+                <h1>Protected Content: Only visible to logged-in users!</h1>
+              </ProtectedRoute>
             }
           />
         </Routes>
