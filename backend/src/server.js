@@ -14,13 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
-// Serve static files from the uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Serve static files from the uploads folder inside src
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Updated to serve files from src/uploads
 
 // dbConnection
 dbConnection();
 
-// api
+// api routes
 app.use("/api/users", userRoutes);
 app.use("/api/events", eventRoutes);
 

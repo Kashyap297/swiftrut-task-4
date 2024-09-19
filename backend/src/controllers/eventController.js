@@ -16,6 +16,7 @@ const createEvent = async (req, res) => {
     // Handle image file upload
     let imageUrl = "";
     if (req.file) {
+      // Update the image path to refer to uploads inside src folder
       imageUrl = `/uploads/${req.file.filename}`;
     }
 
