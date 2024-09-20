@@ -60,7 +60,7 @@ const MyEvents = () => {
       {events.length === 0 ? (
         <p>You have not created any events yet.</p>
       ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {events.map((event) => (
             <li
               key={event._id}
