@@ -33,7 +33,7 @@ const Header = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold text-orange-500 flex items-center space-x-2"
+          className="text-2xl font-bold text-gray-500 flex items-center space-x-2"
         >
           <FontAwesomeIcon icon={faUserCircle} className="text-3xl" />
           <span>EventManager</span>
@@ -41,7 +41,7 @@ const Header = () => {
 
         {/* Search Bar */}
         <div className="flex-1 mx-4 relative">
-          <input
+          {/* <input
             type="text"
             placeholder="Search events..."
             className="px-4 py-2 ps-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
@@ -49,7 +49,7 @@ const Header = () => {
           <FontAwesomeIcon
             icon={faSearch}
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-          />
+          /> */}
         </div>
 
         {/* Buttons */}
