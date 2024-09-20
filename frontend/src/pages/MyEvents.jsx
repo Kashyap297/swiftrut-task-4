@@ -56,52 +56,72 @@ const MyEvents = () => {
 
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6">My Events</h2>
+      <h2 className="text-4xl font-bold mb-8 text-gray-900">My Events</h2>
       {events.length === 0 ? (
         <p>You have not created any events yet.</p>
       ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event) => (
             <li
               key={event._id}
-              className="bg-white shadow-md p-4 rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
+              className="bg-white shadow-lg border border-gray-200 rounded-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
             >
               {/* Display the image */}
               {event.imageUrl && (
                 <img
                   src={`${BASE_URL}${event.imageUrl}`} // Full image URL
                   alt={event.title}
-                  className="w-full h-48 object-cover rounded-md mb-4"
+                  className="w-full h-48 object-cover rounded-t-lg"
                 />
               )}
 
-              {/* Event Title */}
-              <h2 className="text-lg font-semibold text-gray-800">
-                {event.title}
-              </h2>
+              <div className="p-6">
+                {/* Event Title */}
+                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                  {event.title}
+                </h2>
 
-              {/* Event Date */}
-              <p className="text-gray-600">
-                Date: {new Date(event.date).toLocaleDateString()}
-              </p>
+                {/* Event Date */}
+                <p className="text-gray-600 mb-2">
+                  <span className="font-medium">Date: </span>
+                  {new Date(event.date).toLocaleDateString()}
+                </p>
 
-              {/* Event Location */}
-              <p className="text-gray-600">Location: {event.location}</p>
+                {/* Event Location */}
+                <p className="text-gray-600 mb-4">
+                  <span className="font-medium">Location: </span>
+                  {event.location}
+                </p>
 
-              {/* Edit and Delete Buttons */}
-              <div className="flex justify-between mt-4">
-                <button
-                  onClick={() => handleEdit(event._id)}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(event._id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                >
-                  Delete
-                </button>
+                {/* RSVPed Users */}
+                <p className="text-gray-800 font-semibold mb-4">
+                  Enrolled User For this Event :
+                </p>
+                {event.attendees.length > 0 ? (
+                  <ul className="text-gray-600 list-disc list-inside">
+                    {event.attendees.map((attendee) => (
+                      <li key={attendee._id}>{attendee.username}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-gray-500">No users have RSVPed yet.</p>
+                )}
+
+                {/* Edit and Delete Buttons */}
+                <div className="flex justify-between mt-6">
+                  <button
+                    onClick={() => handleEdit(event._id)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(event._id)}
+                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </li>
           ))}

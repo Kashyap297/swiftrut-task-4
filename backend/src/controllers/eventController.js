@@ -43,7 +43,9 @@ const createEvent = async (req, res) => {
 // Get all events
 const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find().populate("createdBy", "username email");
+    const events = await Event.find()
+      .populate("createdBy", "username email")
+      .populate("attendees", "username");
     res.status(200).json(events);
   } catch (error) {
     res.status(500).json({
@@ -56,7 +58,10 @@ const getAllEvents = async (req, res) => {
 // Get events by the logged-in user
 const getMyEvents = async (req, res) => {
   try {
-    const events = await Event.find({ createdBy: req.user._id });
+    const events = await Event.find({ createdBy: req.user._id }).populate(
+      "attendees",
+      "username email"
+    );
     res.status(200).json(events);
   } catch (error) {
     res.status(500).json({
@@ -66,7 +71,6 @@ const getMyEvents = async (req, res) => {
   }
 };
 
-// Delete an event
 // Delete an event
 const deleteEvent = async (req, res) => {
   try {
@@ -141,7 +145,9 @@ const updateEvent = async (req, res) => {
 // Get a specific event by ID
 const getEventById = async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const event = await Event.findById(req.params.id)
+      .populate("createdBy", "username email")
+      .populate("attendees", "username");
 
     if (!event) {
       return res.status(404).json({ message: "Event not found" });
@@ -170,12 +176,12 @@ const rsvpEvent = async (req, res) => {
     if (event.attendees.includes(req.user._id)) {
       return res
         .status(400)
-        .json({ message: "You have already booked to this event" });
+        .json({ message: "You have already RSVP'd to this event." });
     }
 
     // Check if the event has reached its maximum attendees
     if (event.attendees.length >= event.maxAttendees) {
-      return res.status(400).json({ message: "Event is fully booked" });
+      return res.status(400).json({ message: "This event is fully booked." });
     }
 
     // Add the user to the attendees list
