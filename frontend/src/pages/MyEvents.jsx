@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Importing icons from react-icons
 import api from "../api/api"; // Assuming your Axios instance is in utils/api.js
 
 // Base URL for the backend (adjust if necessary)
@@ -95,7 +96,7 @@ const MyEvents = () => {
 
                 {/* RSVPed Users */}
                 <p className="text-gray-800 font-semibold mb-4">
-                  Enrolled User For this Event :
+                  Enrolled User For this Event:
                 </p>
                 {event.attendees.length > 0 ? (
                   <ul className="text-gray-600 list-disc list-inside">
@@ -111,15 +112,15 @@ const MyEvents = () => {
                 <div className="flex justify-between mt-6">
                   <button
                     onClick={() => handleEdit(event._id)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                    className="flex items-center hover:border-blue-500 justify-center border text-blue-500 px-4 py-2 rounded-md transition-transform transform  active:scale-95"
                   >
-                    Edit
+                    <FaEdit className="mr-2" /> Edit
                   </button>
                   <button
                     onClick={() => handleDelete(event._id)}
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors"
+                    className="flex items-center hover:border-red-500 justify-center border text-red-500 px-4 py-2 rounded-md transition-transform transform  active:scale-95"
                   >
-                    Delete
+                    <FaTrashAlt className="mr-2" /> Delete
                   </button>
                 </div>
               </div>
