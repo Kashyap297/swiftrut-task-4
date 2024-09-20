@@ -66,9 +66,7 @@ const CreateEvent = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md px-8 py-6 mx-auto bg-white shadow-md rounded-lg">
-        <h2 className="text-2xl font-bold text-orange-600 mb-6">
-          Create Event
-        </h2>
+        <h2 className="text-2xl font-bold text-[#dc363c] mb-6">Create Event</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="mb-4">
@@ -152,7 +150,7 @@ const CreateEvent = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-600 transition duration-200"
+            className="w-full py-2 bg-[#093054] text-white font-semibold rounded-md hover:bg-[#102144] transition duration-200"
           >
             Create Event
           </button>

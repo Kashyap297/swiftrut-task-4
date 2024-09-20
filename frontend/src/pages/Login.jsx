@@ -70,7 +70,7 @@ const Login = () => {
 
           {/* Keep signed in & forgot password */}
           <div className="flex items-center justify-center mb-6">
-            <a href="#" className="text-orange-500 hover:underline text-sm">
+            <a href="#" className="text-[#dc363c] hover:underline text-sm">
               Forgot password?
             </a>
           </div>
@@ -94,7 +94,7 @@ const Login = () => {
           <span className="text-gray-500">Not a member yet?</span>{" "}
           <Link
             to="/register"
-            className="text-orange-500 font-semibold hover:underline"
+            className="text-[#dc363c] font-semibold hover:underline"
           >
             Register
           </Link>

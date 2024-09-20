@@ -33,7 +33,7 @@ const Header = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold text-rose-800 flex items-center space-x-2"
+          className="text-2xl font-bold text-[#dc363c] flex items-center space-x-2"
         >
           <FontAwesomeIcon icon={faUserCircle} className="text-3xl" />
           <span>BookMyEvents</span>
@@ -64,7 +64,7 @@ const Header = () => {
               <div className="relative">
                 <button
                   onClick={toggleDropdown}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-blue-600 flex items-center"
+                  className="bg-[#093054] text-white px-4 py-2 rounded-md font-semibold hover:bg-[#102144] flex items-center"
                 >
                   Actions
                   <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
@@ -96,7 +96,7 @@ const Header = () => {
               {/* Logout Button */}
               <button
                 onClick={handleLogout}
-                className="flex items-center bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
+                className="flex items-center bg-[#dc363c] text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
               >
                 <FontAwesomeIcon icon={faSignOutAlt} className="mr-2" />
                 Logout
@@ -106,14 +106,14 @@ const Header = () => {
             <>
               <Link
                 to="/login"
-                className="flex items-center bg-transparent text-gray-600 hover:text-orange-500 border border-gray-300 px-4 py-2 rounded-md font-semibold"
+                className="flex items-center bg-transparent text-gray-600 hover:text-red-600 border border-gray-300 px-4 py-2 rounded-md font-semibold"
               >
                 <FontAwesomeIcon icon={faSignInAlt} className="mr-2" />
                 Login
               </Link>
               <Link
                 to="/register"
-                className="flex items-center bg-orange-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-orange-600"
+                className="flex items-center bg-[#dc363c] text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600"
               >
                 <FontAwesomeIcon icon={faUserCircle} className="mr-2" />
                 Register
