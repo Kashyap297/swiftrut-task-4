@@ -113,7 +113,7 @@ const EventDetails = () => {
           <div>
             {!userHasRSVPd && event.attendees.length < event.maxAttendees ? (
               <button
-                className="bg-orange-500 text-white px-6 py-3 rounded-md hover:bg-orange-600 w-full lg:w-auto"
+                className="border border-gray-400 text-orange-500 font-bold px-6 py-3 rounded-md hover:bg-orange-500 hover:text-white  w-full lg:w-auto"
                 onClick={handleRSVP}
               >
                 Reserve a spot
