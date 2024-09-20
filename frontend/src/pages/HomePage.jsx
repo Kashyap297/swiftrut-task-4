@@ -38,8 +38,13 @@ const HomePage = () => {
     fetchEvents();
   }, []);
 
-  // Function to handle filtering
-  const handleFilter = () => {
+  // Trigger the filter logic when selectedTitle changes (live search)
+  useEffect(() => {
+    handleFilterByTitle();
+  }, [selectedTitle]); // Runs the filter whenever the title changes
+
+  // Function to handle filtering by title
+  const handleFilterByTitle = () => {
     let filtered = events;
 
     // Filter by title
@@ -48,6 +53,13 @@ const HomePage = () => {
         event.title.toLowerCase().includes(selectedTitle.toLowerCase())
       );
     }
+
+    setFilteredEvents(filtered);
+  };
+
+  // Function to handle filtering by location and date
+  const handleFilterByLocationAndDate = () => {
+    let filtered = events;
 
     // Filter by location
     if (selectedLocation) {
@@ -144,7 +156,7 @@ const HomePage = () => {
 
         {/* Search Button */}
         <button
-          onClick={handleFilter}
+          onClick={handleFilterByLocationAndDate}
           className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800"
         >
           Search
