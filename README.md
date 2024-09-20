@@ -22,5 +22,11 @@ no of attendies show to user
 
 // pending 
 event Notification
-filter events by location, date, eventType
-Front_BackEnd Deployment pending.
+
+
+
+// vercel front end link
+swiftrut-task-4-mz1q.vercel.app
+
+// vercel backend link
+https://swiftrut-task-4.vercel.app/
