@@ -170,7 +170,7 @@ const rsvpEvent = async (req, res) => {
     if (event.attendees.includes(req.user._id)) {
       return res
         .status(400)
-        .json({ message: "You have already RSVP'd to this event" });
+        .json({ message: "You have already booked to this event" });
     }
 
     // Check if the event has reached its maximum attendees

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  HiOutlineCalendar,
+  HiOutlineLocationMarker,
+  HiOutlineClock,
+} from "react-icons/hi"; // Icons for date, location, time
 import api from "../api/api"; // Ensure api is configured correctly
 
 const EventDetails = () => {
@@ -33,7 +38,7 @@ const EventDetails = () => {
       const response = await api.post(`/events/${id}/rsvp`);
       setEvent(response.data.event); // Update the event with the new RSVP
       setUserHasRSVPd(true); // Mark that the user has RSVPed
-      setRsvpStatus("RSVP successful!"); // Show success message
+      setRsvpStatus("Event Enrolled Successfully...!"); // Show success message
     } catch (error) {
       console.error("RSVP failed:", error.response?.data || error.message);
       setRsvpStatus(
@@ -55,42 +60,90 @@ const EventDetails = () => {
   }
 
   const formattedDate = new Date(event.date).toLocaleDateString();
+  const formattedTime = new Date(event.date).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-3xl font-bold mb-6">{event.title}</h2>
-      {event.imageUrl && (
-        <img
-          src={`http://localhost:8000${event.imageUrl}`}
-          alt={event.title}
-          className="w-full h-64 object-cover rounded-md mb-4"
-        />
-      )}
-      <p className="text-gray-600">Date: {formattedDate}</p>
-      <p className="text-gray-600">Location: {event.location}</p>
-      <p className="text-gray-600">Description: {event.description}</p>
-      <p className="text-gray-600">
-        Attendees: {event.attendees.length}/{event.maxAttendees}
-      </p>
+      <div className="flex flex-col lg:flex-row gap-8">
+        {/* Event Image */}
+        {event.imageUrl && (
+          <div className="lg:w-1/2">
+            <img
+              src={`http://localhost:8000${event.imageUrl}`}
+              alt={event.title}
+              className="w-full h-64 lg:h-80 object-cover rounded-lg shadow-md"
+            />
+          </div>
+        )}
 
-      {/* RSVP button */}
-      {!userHasRSVPd && event.attendees.length < event.maxAttendees ? (
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-          onClick={handleRSVP}
-        >
-          RSVP
-        </button>
-      ) : (
-        <p className="text-gray-500">
-          {userHasRSVPd
-            ? "You have already RSVPed for this event."
-            : "This event is fully booked."}
-        </p>
-      )}
+        {/* Event Info */}
+        <div className="lg:w-1/2">
+          <div className="mb-6">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              {event.title}
+            </h2>
+            <div className="flex items-center gap-4 text-gray-500">
+              <HiOutlineCalendar className="w-6 h-6 text-gray-700" />
+              <span>{formattedDate}</span>
+              <HiOutlineClock className="w-6 h-6 text-gray-700" />
+              <span>{formattedTime}</span>
+            </div>
+          </div>
 
-      {/* Show RSVP status message */}
-      {rsvpStatus && <p className="text-green-500 mt-4">{rsvpStatus}</p>}
+          {/* Location */}
+          <div className="mb-6">
+            <div className="flex items-center text-gray-500 gap-4">
+              <HiOutlineLocationMarker className="w-6 h-6 text-gray-700" />
+              <span>{event.location}</span>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div className="mb-6">
+            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+              About this event
+            </h3>
+            <p className="text-gray-600">{event.description}</p>
+          </div>
+
+          {/* RSVP Button */}
+          <div>
+            {!userHasRSVPd && event.attendees.length < event.maxAttendees ? (
+              <button
+                className="bg-orange-500 text-white px-6 py-3 rounded-md hover:bg-orange-600 w-full lg:w-auto"
+                onClick={handleRSVP}
+              >
+                Reserve a spot
+              </button>
+            ) : (
+              <p className="text-gray-500">
+                {userHasRSVPd
+                  ? "You have already booked this event."
+                  : "This event is fully booked."}
+              </p>
+            )}
+
+            {/* Show RSVP status message */}
+            {rsvpStatus && <p className="text-green-500 mt-4">{rsvpStatus}</p>}
+          </div>
+        </div>
+      </div>
+
+      {/* Event Meta Info */}
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          Event Details
+        </h3>
+        <div className="flex items-center gap-4 text-gray-600">
+          <HiOutlineClock className="w-6 h-6 text-gray-700" />
+          <p>
+            {formattedTime} | {event.maxAttendees} total seats
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

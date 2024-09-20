@@ -29,16 +29,16 @@ const HomePage = () => {
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Upcoming Events</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {events.length > 0 ? (
           events.map((event) => (
             <EventCard
-              key={event._id} // Use event._id as the unique key
-              id={event._id} // Pass the _id to EventCard as 'id'
+              key={event._id}
+              id={event._id}
               title={event.title}
               date={event.date}
               location={event.location}
-              imageUrl={event.imageUrl} // Pass the image URL to EventCard
+              imageUrl={event.imageUrl}
             />
           ))
         ) : (
