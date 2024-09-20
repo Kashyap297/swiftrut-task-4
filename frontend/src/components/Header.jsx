@@ -33,7 +33,7 @@ const Header = () => {
         {/* Logo */}
         <Link
           to="/"
-          className="text-2xl font-bold text-green-800 flex items-center space-x-2"
+          className="text-2xl font-bold text-rose-800 flex items-center space-x-2"
         >
           <FontAwesomeIcon icon={faUserCircle} className="text-3xl" />
           <span>BookMyEvents</span>
