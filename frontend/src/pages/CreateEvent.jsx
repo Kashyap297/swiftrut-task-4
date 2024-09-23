@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import api from "../api/api"; // Assuming your axios instance is in utils/api.js
+import api from "../api/api"; // Assuming your axios instance is correctly configured
 import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
@@ -10,21 +10,24 @@ const CreateEvent = () => {
     location: "",
     maxAttendees: "",
   });
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(null); // For storing the selected image file
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Handles the input fields change
   const handleChange = (e) => {
     setEventData({ ...eventData, [e.target.name]: e.target.value });
   };
 
+  // Handles file change event
   const handleFileChange = (e) => {
-    setImage(e.target.files[0]);
+    setImage(e.target.files[0]); // Store the selected file in the state
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validation for all fields
     if (
       !eventData.title ||
       !eventData.description ||
@@ -36,6 +39,7 @@ const CreateEvent = () => {
       return;
     }
 
+    // Create FormData to handle text inputs and image upload
     const formData = new FormData();
     formData.append("title", eventData.title);
     formData.append("description", eventData.description);
@@ -43,22 +47,22 @@ const CreateEvent = () => {
     formData.append("location", eventData.location);
     formData.append("maxAttendees", eventData.maxAttendees);
     if (image) {
-      formData.append("image", image);
+      formData.append("image", image); // Append the image file only if it exists
     }
 
     try {
       const response = await api.post("/events/create", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "multipart/form-data", // Ensure multipart data is set
         },
       });
       console.log("Event created successfully:", response.data);
-      navigate("/my-events"); // Redirect to "My Events" after creation
+      navigate("/my-events"); // Redirect to "My Events" page after creation
     } catch (error) {
       console.error("Error creating event:", error.response || error.message);
       setError(
         error.response?.data?.message ||
-          "An error occurred while creating the event."
+        "An error occurred while creating the event."
       );
     }
   };
