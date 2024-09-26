@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: "https://swiftrut-task-4.vercel.app/api", // Make sure this matches your backend URL
+  baseURL: "https://swiftrut-task-4.onrender.com/api", // Make sure this matches your backend URL
 });
 
 // Add a request interceptor to include token in requests (if necessary)
